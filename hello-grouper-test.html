@@ -11,16 +11,29 @@
 			line-height: 150%;
 		}
 
-		#container span:nth-child(1)  {
+		#container span:nth-child(1),
+		#container span:nth-child(6)  {
 			background: #ff00ff;
 		}
 
-		#container span:nth-child(2)  {
+		#container span:nth-child(2),
+		#container span:nth-child(7)  {
 			background: #ffff00;
 		}
 
-		#container span:nth-child(3)  {
+		#container span:nth-child(3),
+		#container span:nth-child(8)  {
 			background: #11ffff;
+		}
+
+		#container span:nth-child(4),
+		#container span:nth-child(8)  {
+			background: #ccc;
+		}
+
+		#container span:nth-child(10),
+		#container span:nth-child(5)  {
+			background: #ff1100;
 		}
 	</style>
 </head>
@@ -36,7 +49,8 @@
 		var ranges = [
 
 			{ start:10, end:214, fontWeight:'bold' },
-		//	{ start:20, end:50, fontStyle:'stalic' }
+			{ start:20, end:50, fontStyle:'italic' },
+			{ start:60, end:200, textDecoration:'undelined' }
 		];
 
 		//Split string into two parts
@@ -65,13 +79,6 @@
 					start === false
 				) ? true : false;
 
-				//Group ha no start or end point
-				//if( start === false && end === false) {
-				//	ii++;
-				//	var inbetween = (ranges[i].start < totalTextCount) ? true : false;	
-					//continue;
-				//}
-
 				var testString = ( start === true ) ? ranges[i].start-totalTextCount : ranges[i].end-totalTextCount;
 				var textArray = stringSplitter ( text[ii], testString );
 
@@ -82,6 +89,8 @@
 					text.splice(ii+1, 0, textArray[1]);	
 				}
 				
+
+				console.log(text[ii].length);
 				totalTextCount += text[ii].length;
 
 				if( end === true ) {
