@@ -96,10 +96,19 @@
 
 				for (style in ranges[ii].style) {
 
-			
-					span.style[style] = ranges[ii].style[style];
+					console.log(ranges[ii].start, totalTextCount)
+
+					if( 
+						ranges[ii].start <= totalTextCount
+						//ranges[ii].end <= totalTextCount+text[i].content.length 
+
+					) {
+						span.style[style] = ranges[ii].style[style];	
+					}
 				}
 			}
+
+			totalTextCount += text[i].content.length;
 
 			container.appendChild( span );
 		};
