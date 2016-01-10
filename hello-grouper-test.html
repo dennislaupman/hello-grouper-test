@@ -61,6 +61,16 @@
 			return [ Str.substring(0, Pos), Str.substring(Pos) ];
 		};
 
+		var styleSetter = function ( range ) {
+
+			for (style in range.style) {
+
+				console.log(text[ii].style)
+				text[ii].style = text[ii].style || {} ;
+				text[ii].style[style] = range.style[style];
+			}
+		}
+
 		//
 		var i = 0;
 		while( i < ranges.length || i > 10) {
@@ -89,18 +99,21 @@
 
 				//Set styles
 				if( ranges[i].start < (totalTextCount + text[ii].content.length) ) {
-				
-					for (style in ranges[i].style) {
-
-						text[ii].style = text[ii].style || {} ;
-						text[ii].style[style] = ranges[i].style[style];
-					}
+					
+					styleSetter( ranges[i] );
 				}
 
 				//add second part if string is greater than zero
 				if( textArray[1].length  > 0) {
 
-					text.splice(ii+1, 0, { content: textArray[1] } );
+					console.log(text[ii].style)
+					text.splice(ii+1, 0, { 
+
+						content: textArray[1] 
+						//style: text[ii].style
+					} );
+
+					//text[ii].style[style] = ranges[i].style[style];
 				}
 				
 				totalTextCount += text[ii].content.length;
@@ -127,6 +140,8 @@
 			var span = document.createElement('span');
 				span.innerHTML = text[i].content;
 
+
+//console.log(text[i].style)
 			for (style in text[i].style) {
 			
 				span.style[style] = text[i].style[style];
