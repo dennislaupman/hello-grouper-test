@@ -1,0 +1,107 @@
+<html>
+<head>
+	<title>Hello - Grouper Test</title>
+
+	<style type="text/css">
+
+		#container {
+
+			font-family: arial;
+			font-size: 14px;
+			line-height: 150%;
+		}
+
+		#container span:nth-child(1)  {
+			background: #ff00ff;
+		}
+
+		#container span:nth-child(2)  {
+			background: #ffff00;
+		}
+
+		#container span:nth-child(3)  {
+			background: #11ffff;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="container"></div>
+
+	<script type="text/javascript">
+
+		//Demo text
+		var text = ["The information contained in this communication is confidential and may be legally privileged. It is intended solely for the use of the individual or the entity to whom it is addressed and the others authorised to receive it"];
+
+		var ranges = [
+
+			{ start:10, end:214, fontWeight:'bold' },
+		//	{ start:20, end:50, fontStyle:'stalic' }
+		];
+
+		//Split string into two parts
+		var stringSplitter = function( Str, Pos ) {
+
+			return [ Str.substring(0, Pos), Str.substring(Pos) ];
+		};
+
+		//
+		var i = 0;
+		while( i < ranges.length || i > 10) {
+
+			var ii = 0;
+			var totalTextCount = 0;
+
+			while( ii < text.length || ii > 10) {
+				
+				var start = (
+					ranges[i].start > totalTextCount &&
+					ranges[i].start < (totalTextCount + text[ii].length)
+				) ? true : false;
+
+				var end = (
+					ranges[i].end > totalTextCount &&
+					ranges[i].end <= (totalTextCount + text[ii].length) &&
+					start === false
+				) ? true : false;
+
+				//Group ha no start or end point
+				//if( start === false && end === false) {
+				//	ii++;
+				//	var inbetween = (ranges[i].start < totalTextCount) ? true : false;	
+					//continue;
+				//}
+
+				var testString = ( start === true ) ? ranges[i].start-totalTextCount : ranges[i].end-totalTextCount;
+				var textArray = stringSplitter ( text[ii], testString );
+
+				text[ii] = textArray[0];
+
+				if( textArray[1].length  > 0) {
+
+					text.splice(ii+1, 0, textArray[1]);	
+				}
+				
+				totalTextCount += text[ii].length;
+
+				if( end === true ) {
+
+					break;
+				}
+				
+				ii++;
+			}
+
+			i++;
+		};
+
+		console.log(text);
+
+		//Load text into container
+		var container = document.querySelector('#container');
+			container.innerHTML = '<span>'+text.join('</span><span>')+'</span>';
+
+
+	</script>
+</body>
+</html>
