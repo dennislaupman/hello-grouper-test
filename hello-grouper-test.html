@@ -24,9 +24,10 @@
 
 		var ranges = [
 
-			{ start:10, end:214, style: { fontWeight:'bold' } },
+			{ start:10, end:21, style: { fontWeight:'bold' } },
+			{ start:45, end:80, style: { fontWeight:'bold' } },
 			{ start:20, end:50, style: { fontStyle:'italic' } },
-			{ start:60, end:200, style: {  textDecoration:'underline' } }
+			{ start:40, end:200, style: {  textDecoration:'underline' } }
 		];
 
 		//Split string into two parts
@@ -96,11 +97,9 @@
 
 				for (style in ranges[ii].style) {
 
-					console.log(ranges[ii].start, totalTextCount)
-
 					if( 
-						ranges[ii].start <= totalTextCount
-						//ranges[ii].end <= totalTextCount+text[i].content.length 
+						ranges[ii].start <= totalTextCount &&
+						ranges[ii].end >= totalTextCount+text[i].content.length 
 
 					) {
 						span.style[style] = ranges[ii].style[style];	
