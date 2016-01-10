@@ -11,6 +11,7 @@
 			line-height: 150%;
 		}
 
+		/*
 		#container span:nth-child(1),
 		#container span:nth-child(6)  {
 			background: #ff00ff;
@@ -34,7 +35,8 @@
 		#container span:nth-child(10),
 		#container span:nth-child(5)  {
 			background: #ff1100;
-		}
+		}*/
+
 	</style>
 </head>
 <body>
@@ -48,9 +50,9 @@
 
 		var ranges = [
 
-			{ start:10, end:214, fontWeight:'bold' },
-			{ start:20, end:50, fontStyle:'italic' },
-			{ start:60, end:200, textDecoration:'undelined' }
+			{ start:10, end:214, style: { fontWeight:'bold' } },
+			{ start:20, end:50, style: { fontStyle:'italic' } },
+			{ start:60, end:200, style: {  textDecoration:'underline' } }
 		];
 
 		//Split string into two parts
@@ -82,8 +84,20 @@
 				var testString = ( start === true ) ? ranges[i].start-totalTextCount : ranges[i].end-totalTextCount;
 				var textArray = stringSplitter ( text[ii].content, testString );
 
+				
 				text[ii].content = textArray[0];
 
+				//Set styles
+				if( ranges[i].start < (totalTextCount + text[ii].content.length) ) {
+				
+					for (style in ranges[i].style) {
+
+						text[ii].style = text[ii].style || {} ;
+						text[ii].style[style] = ranges[i].style[style];
+					}
+				}
+
+				//add second part if string is greater than zero
 				if( textArray[1].length  > 0) {
 
 					text.splice(ii+1, 0, { content: textArray[1] } );
@@ -102,7 +116,7 @@
 			i++;
 		};
 
-		console.log(text);
+	//	console.log(text);
 
 		//Load text into container
 		var container = document.querySelector('#container');
@@ -112,6 +126,11 @@
 			
 			var span = document.createElement('span');
 				span.innerHTML = text[i].content;
+
+			for (style in text[i].style) {
+			
+				span.style[style] = text[i].style[style];
+			}
 
 			container.appendChild( span );
 		};
