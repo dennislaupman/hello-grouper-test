@@ -44,7 +44,7 @@
 	<script type="text/javascript">
 
 		//Demo text
-		var text = ["The information contained in this communication is confidential and may be legally privileged. It is intended solely for the use of the individual or the entity to whom it is addressed and the others authorised to receive it"];
+		var text = [ { content: "The information contained in this communication is confidential and may be legally privileged. It is intended solely for the use of the individual or the entity to whom it is addressed and the others authorised to receive it" } ];
 
 		var ranges = [
 
@@ -70,28 +70,26 @@
 				
 				var start = (
 					ranges[i].start > totalTextCount &&
-					ranges[i].start < (totalTextCount + text[ii].length)
+					ranges[i].start < (totalTextCount + text[ii].content.length)
 				) ? true : false;
 
 				var end = (
 					ranges[i].end > totalTextCount &&
-					ranges[i].end <= (totalTextCount + text[ii].length) &&
+					ranges[i].end <= (totalTextCount + text[ii].content.length) &&
 					start === false
 				) ? true : false;
 
 				var testString = ( start === true ) ? ranges[i].start-totalTextCount : ranges[i].end-totalTextCount;
-				var textArray = stringSplitter ( text[ii], testString );
+				var textArray = stringSplitter ( text[ii].content, testString );
 
-				text[ii] = textArray[0];
+				text[ii].content = textArray[0];
 
 				if( textArray[1].length  > 0) {
 
-					text.splice(ii+1, 0, textArray[1]);	
+					text.splice(ii+1, 0, { content: textArray[1] } );
 				}
 				
-
-				console.log(text[ii].length);
-				totalTextCount += text[ii].length;
+				totalTextCount += text[ii].content.length;
 
 				if( end === true ) {
 
@@ -108,7 +106,14 @@
 
 		//Load text into container
 		var container = document.querySelector('#container');
-			container.innerHTML = '<span>'+text.join('</span><span>')+'</span>';
+			container.innerHTML = '';
+
+		for (var i = 0; i < text.length; i++) {
+			
+			container.innerHTML += '<span>'+text[i].content+'</span>';	
+		};
+
+		//	container.innerHTML = '<span>'+text.join('</span><span>')+'</span>';
 
 
 	</script>
