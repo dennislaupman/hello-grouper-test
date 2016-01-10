@@ -11,32 +11,6 @@
 			line-height: 150%;
 		}
 
-		/*
-		#container span:nth-child(1),
-		#container span:nth-child(6)  {
-			background: #ff00ff;
-		}
-
-		#container span:nth-child(2),
-		#container span:nth-child(7)  {
-			background: #ffff00;
-		}
-
-		#container span:nth-child(3),
-		#container span:nth-child(8)  {
-			background: #11ffff;
-		}
-
-		#container span:nth-child(4),
-		#container span:nth-child(8)  {
-			background: #ccc;
-		}
-
-		#container span:nth-child(10),
-		#container span:nth-child(5)  {
-			background: #ff1100;
-		}*/
-
 	</style>
 </head>
 <body>
@@ -61,16 +35,6 @@
 			return [ Str.substring(0, Pos), Str.substring(Pos) ];
 		};
 
-		var styleSetter = function ( range ) {
-
-			for (style in range.style) {
-
-				console.log(text[ii].style)
-				text[ii].style = text[ii].style || {} ;
-				text[ii].style[style] = range.style[style];
-			}
-		}
-
 		//
 		var i = 0;
 		while( i < ranges.length || i > 10) {
@@ -94,26 +58,15 @@
 				var testString = ( start === true ) ? ranges[i].start-totalTextCount : ranges[i].end-totalTextCount;
 				var textArray = stringSplitter ( text[ii].content, testString );
 
-				
 				text[ii].content = textArray[0];
-
-				//Set styles
-				if( ranges[i].start < (totalTextCount + text[ii].content.length) ) {
-					
-					styleSetter( ranges[i] );
-				}
 
 				//add second part if string is greater than zero
 				if( textArray[1].length  > 0) {
 
-					console.log(text[ii].style)
 					text.splice(ii+1, 0, { 
 
 						content: textArray[1] 
-						//style: text[ii].style
 					} );
-
-					//text[ii].style[style] = ranges[i].style[style];
 				}
 				
 				totalTextCount += text[ii].content.length;
@@ -129,22 +82,23 @@
 			i++;
 		};
 
-	//	console.log(text);
-
 		//Load text into container
 		var container = document.querySelector('#container');
 			container.innerHTML = '';
-
+	
+		var totalTextCount = 0;
 		for (var i = 0; i < text.length; i++) {
 			
 			var span = document.createElement('span');
 				span.innerHTML = text[i].content;
 
+			for (var ii = 0; ii < ranges.length; ii++) {
 
-//console.log(text[i].style)
-			for (style in text[i].style) {
+				for (style in ranges[ii].style) {
+
 			
-				span.style[style] = text[i].style[style];
+					span.style[style] = ranges[ii].style[style];
+				}
 			}
 
 			container.appendChild( span );
