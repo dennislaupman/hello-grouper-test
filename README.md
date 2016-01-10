@@ -1,6 +1,6 @@
 ## Description
 
-Turns a string in to groups
+Turns a string into groups
 
 #### Watch (in browser)
 >
