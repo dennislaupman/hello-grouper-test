@@ -110,11 +110,11 @@
 
 		for (var i = 0; i < text.length; i++) {
 			
-			container.innerHTML += '<span>'+text[i].content+'</span>';	
+			var span = document.createElement('span');
+				span.innerHTML = text[i].content;
+
+			container.appendChild( span );
 		};
-
-		//	container.innerHTML = '<span>'+text.join('</span><span>')+'</span>';
-
 
 	</script>
 </body>
